@@ -49,7 +49,7 @@ div.comments{
     ?>    
         <li>
            <?php
-                echo   $model->logged_user;
+                echo   $model->user;
                 echo    '<br>';
                 echo  '<span>'.$model->created_at.'</span>';
                 echo   $model->comment;

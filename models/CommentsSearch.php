@@ -18,7 +18,7 @@ class CommentsSearch extends Comments
     {
         return [
             [['id'], 'integer'],
-            [['logged_user', 'comment', 'created_at'], 'safe'],
+            [['user', 'comment', 'created_at'], 'safe'],
         ];
     }
 
@@ -62,7 +62,7 @@ class CommentsSearch extends Comments
             'created_at' => $this->created_at,
         ]);
 
-        $query->andFilterWhere(['like', 'logged_user', $this->logged_user])
+        $query->andFilterWhere(['like', 'user', $this->user])
             ->andFilterWhere(['like', 'comment', $this->comment]);
 
         return $dataProvider;

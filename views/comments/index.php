@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'logged_user',
+            'user',
             'comment:ntext',
             'created_at',
             'update_at',

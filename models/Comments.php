@@ -49,10 +49,10 @@ class Comments extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['logged_user', 'comment'], 'required'],
+            [['user', 'comment'], 'required'],
             [['comment'], 'string'],
             [['created_at','update_at'], 'datetime'],
-            [['logged_user'], 'string', 'max' => 255],
+            [['user'], 'string', 'max' => 255],
         ];
     }
 
@@ -63,7 +63,7 @@ class Comments extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'logged_user' => 'Logged User',
+            'user' => 'User',
             'comment' => 'Comment',
             'created_at' => 'Created At',
             'update_at' => 'Updated At',
