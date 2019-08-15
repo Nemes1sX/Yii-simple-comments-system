@@ -5,7 +5,8 @@ namespace app\controllers;
 use Yii;
 use app\models\Comments;
 use app\models\CommentsSearch;
-use yii\behaviors\TimestampBehavior;
+use yii\data\Pagination; 
+use yii\data\ActiveDataProvide;
 use yii\db\Expression;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -57,8 +58,15 @@ class CommentsController extends Controller
     {
         $searchModel = new CommentsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $query = Comments::find();
+        $pagination = new Pagination(['totalCount' => count($query->all())]);
+
+        $comments = $query->offset($pagination->offset)
+        ->limit($pagination->limit)
+        ->all();
 
         return $this->render('index', [
+            'pagination' => $pagination,
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
@@ -107,11 +115,22 @@ class CommentsController extends Controller
      */
     public function actionUpdate($id)
     {
+  
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        $session = Yii::$app->session;   
+
+
+        if(Yii::$app->user->identity->username == (new \yii\db\Query())->select('logged_user')->from('comments')->where('id' == $id)){
+
+            if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }else{
+         $session->setFlash('error', 'You cannot edit other person comments'); 
+        return $this->redirect(['index']);
         }
+
 
         return $this->render('update', [
             'model' => $model,
@@ -127,9 +146,18 @@ class CommentsController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $session = Yii::$app->session;   
 
+
+        if(Yii::$app->user->identity->username == (new \yii\db\Query())->select('logged_user')->from('comments')->where('id' == $id)){ 
+        
+        $this->findModel($id)->delete();
         return $this->redirect(['index']);
+        }
+        else{
+            $session->setFlash('error', 'You cannot delete other person comments');
+            return $this->redirect(['index']);
+        }
     }
 
     /**
