@@ -7,6 +7,7 @@ use app\models\Comments;
 use app\models\CommentsSearch;
 use yii\data\Pagination; 
 use yii\data\ActiveDataProvide;
+use yii\data\ActiveDataProvider;
 use yii\db\Expression;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -33,16 +34,16 @@ class CommentsController extends Controller
             ],
             'access' => [
                 'class' => AccessControl::className(),
-                'only' => ['index','view','create','update','delete','find'],
+                'only' => ['userindex','index','view','create','update','delete','find'],
                 'rules' => [
                     [
                       'allow' => true,
-                      'actions' => ['index', 'view'],
+                      'actions' => ['userindex'],
                       'roles' => ['?'],   
                     ],
                     [
                         'allow' => true,
-                        'actions' => ['index','view','create', 'update', 'delete', 'find'],
+                        'actions' => ['userindex','index','view','create', 'update', 'delete', 'find'],
                         'roles' => ['@'],
                     ],
                  ],
@@ -58,14 +59,8 @@ class CommentsController extends Controller
     {
         $searchModel = new CommentsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $query = Comments::find();
-        $pagination = new Pagination(['defaultPageSize' => 5, 'totalCount' => count($query->all())]);
-        $comments = $query->offset($pagination->offset)
-        ->limit($pagination->limit)
-        ->all();
-
-        return $this->render('index', [
-            'pagination' => $pagination,
+        $dataProvider->pagination->pageSize=5;
+        return $this->render('index', [   
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);

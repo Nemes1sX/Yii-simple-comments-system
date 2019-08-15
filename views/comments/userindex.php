@@ -29,6 +29,12 @@ span {
     float: right;
     color: #999999;
 }
+div.pagination{
+    padding-top: 5px;
+}
+div.comments{
+    padding-bottom: 10px;
+}
 </style>
 <div class="user-comments-index">
 
@@ -37,6 +43,7 @@ span {
     <h1><?= Html::encode($this->title) ?></h1>
 
     <a href="/comments/create" class="btn btn-success">Create a comment</a>
+  <div class="comments">  
     <ul>
     <?php foreach($models as $model){
     ?>    
@@ -51,11 +58,14 @@ span {
             
 
               }  ?>
+   </div>           
+            <div class="pagination">  
               <?php
               echo LinkPager::widget([
                 'pagination' => $pagination,
             ]);
             ?>
+           </div> 
         </li>   
     </ul>
 </div> 
