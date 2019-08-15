@@ -59,8 +59,7 @@ class CommentsController extends Controller
         $searchModel = new CommentsSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $query = Comments::find();
-        $pagination = new Pagination(['totalCount' => count($query->all())]);
-
+        $pagination = new Pagination(['defaultPageSize' => 5, 'totalCount' => count($query->all())]);
         $comments = $query->offset($pagination->offset)
         ->limit($pagination->limit)
         ->all();
@@ -71,7 +70,17 @@ class CommentsController extends Controller
             'dataProvider' => $dataProvider,
         ]);
     }
-
+    public function actionUserindex(){
+       $query = Comments::find();
+       $pagination = new Pagination(['defaultPageSize' => 5 , 'totalCount' => count($query->all())]);
+       $models = $query->offset($pagination->offset)
+        ->limit($pagination->limit)
+        ->all();
+        return $this->render('userindex', [
+            'models' => $models,
+            'pagination' => $pagination
+        ]);
+    }
     /**
      * Displays a single Comments model.
      * @param integer $id

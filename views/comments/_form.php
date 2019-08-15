@@ -12,7 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-  <!--   $form->field($model, 'logged_user')->textInput(['maxlength' => true, 'readonly' =>  true, 'value' => Yii::$app->user->identity->username]) ?>-->
+
 
     <?= $form->field($model, 'comment')->textarea(['rows' => 6]) ?>
 

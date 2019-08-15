@@ -10,7 +10,7 @@ use yii\widgets\LinkPager;
 /* @var $searchModel app\models\CommentsSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Comments';
+$this->title = 'Comments admin panel';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="comments-index">
@@ -29,7 +29,6 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'id',
             'logged_user',
             'comment:ntext',
             'created_at',
@@ -38,14 +37,14 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
-    ]); ?>
+        
+    ]);
+    ?>
+   <?php echo LinkPager::widget([
+        'pagination' => $pagination,
+    ]) ?>
 
-        <?php 
-
-            echo LinkPager::widget([
-                'pagination' => $pagination,
-            ]);
-        ?>
+        
 
 
 </div>

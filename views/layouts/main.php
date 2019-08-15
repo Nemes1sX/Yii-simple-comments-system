@@ -41,7 +41,8 @@ AppAsset::register($this);
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'About', 'url' => ['/site/about']],
             ['label' => 'Contact', 'url' => ['/site/contact']],
-            ['label' => 'Comments', 'url' => ['/comments/index']],
+            ['label' => 'Comments Admin Panel', 'url' => ['/comments/index']],
+            ['label' => 'Comments', 'url' => ['/comments/userindex']],
             Yii::$app->user->isGuest ? (
                 ['label' => 'Login', 'url' => ['/site/login']]
             ) : (
